@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FNet.FSA": {
+      "commandName": "Project",
+      "commandLineArgs": "-h"
+    }
+  }
+}

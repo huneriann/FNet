@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNet.FSA", "FNet.FSA\FNet.FSA.csproj", "{27862FF2-1C45-4DDA-BEF7-EF8CF6455BBA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27862FF2-1C45-4DDA-BEF7-EF8CF6455BBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27862FF2-1C45-4DDA-BEF7-EF8CF6455BBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27862FF2-1C45-4DDA-BEF7-EF8CF6455BBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27862FF2-1C45-4DDA-BEF7-EF8CF6455BBA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7DD47E7-CD76-4A5E-B3BE-75795B26420F}
+	EndGlobalSection
+EndGlobal
