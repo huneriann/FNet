@@ -32,6 +32,12 @@ namespace FNet.FSA.WPF
             set { dirInfos = value; OnChanged(); }
         }
 
+        private bool isRunning;
+        public bool IsRunning
+        {
+            get { return isRunning; }
+            set { isRunning = value; OnChanged(); }
+        }
 
         public MainWindow()
         {
@@ -39,6 +45,7 @@ namespace FNet.FSA.WPF
             this.DataContext = this;
             
             DirInfos = new ObservableCollection<Core.Model.DirectoryInfo>();
+            IsRunning = false;
         }
 
         private void runBtn_Click(object sender, RoutedEventArgs e)
@@ -46,6 +53,13 @@ namespace FNet.FSA.WPF
             FSA.Core.Analyzer.GetObject().Path = pathTxtBox.Text;
             FSA.Core.Analyzer.GetObject().log = Log;
             FSA.Core.Analyzer.GetObject().Execute();
+            IsRunning = true;
+        }
+
+        private void stopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            FSA.Core.Analyzer.GetObject().Dispose();
+            IsRunning = false;
         }
 
         private void Log(FSA.Core.Model.DirectoryInfo info)

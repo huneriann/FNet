@@ -43,7 +43,7 @@ namespace FNet.FSA.Core
 
         public void Dispose()
         {
-            watcher.EndInit();
+            watcher.Dispose();
         }
 
         #region Singleton
