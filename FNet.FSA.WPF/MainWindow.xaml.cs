@@ -39,6 +39,13 @@ namespace FNet.FSA.WPF
             set { isRunning = value; OnChanged(); }
         }
 
+        private Visibility _visibility;
+        public Visibility _Visibility
+        {
+            get { return _visibility; }
+            set { _visibility = value; OnChanged(); }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,6 +53,7 @@ namespace FNet.FSA.WPF
             
             DirInfos = new ObservableCollection<Core.Model.DirectoryInfo>();
             IsRunning = false;
+            _Visibility = Visibility.Collapsed;
         }
 
         private void runBtn_Click(object sender, RoutedEventArgs e)
@@ -54,12 +62,14 @@ namespace FNet.FSA.WPF
             FSA.Core.Analyzer.GetObject().log = Log;
             FSA.Core.Analyzer.GetObject().Execute();
             IsRunning = true;
+            _Visibility = Visibility.Visible;
         }
 
         private void stopBtn_Click(object sender, RoutedEventArgs e)
         {
             FSA.Core.Analyzer.GetObject().Dispose();
             IsRunning = false;
+            _Visibility = Visibility.Collapsed;
         }
 
         private void Log(FSA.Core.Model.DirectoryInfo info)
@@ -73,7 +83,7 @@ namespace FNet.FSA.WPF
             App.Current.Dispatcher.Invoke(() =>
             {
                 Core.Model.DirectoryInfo dirInfo = (Core.Model.DirectoryInfo)info;
-                DirInfos.Add(new Core.Model.DirectoryInfo(dirInfo.Path, dirInfo.State));
+                DirInfos.Add(new Core.Model.DirectoryInfo(dirInfo.Path.Trim(), dirInfo.State));
             });
         }
 
