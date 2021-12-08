@@ -1,8 +1,10 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 
 namespace FNet.FSA.Core
 {
     public delegate void Log(Model.DirectoryInfo info);
+    public delegate Task LogAsync(Model.DirectoryInfo info);
 
     public class Analyzer
     {
@@ -66,31 +68,31 @@ namespace FNet.FSA.Core
             }
 
             string path = e.FullPath;
-            log(new Model.DirectoryInfo(path, Model.DirectoryState.Changed));
+            log?.Invoke(new Model.DirectoryInfo(path, Model.DirectoryState.Changed));
         }
 
         public void OnCreated(object sender, FileSystemEventArgs e)
         {
             string path = e.FullPath;
-            log(new Model.DirectoryInfo(path, Model.DirectoryState.Created));
+            log?.Invoke(new Model.DirectoryInfo(path, Model.DirectoryState.Created));
         }
 
         public void OnDeleted(object sender, FileSystemEventArgs e)
         {
             string path = e.FullPath;
-            log(new Model.DirectoryInfo(path, Model.DirectoryState.Deleted));
+            log?.Invoke(new Model.DirectoryInfo(path, Model.DirectoryState.Deleted));
         }
 
         public void OnRenamed(object sender, RenamedEventArgs e)
         {
             string oldPath = e.OldFullPath;
             string newPath = e.FullPath;
-            log(new Model.DirectoryInfo("\nOld Path: " + oldPath + "\nNew Path: " + newPath, Model.DirectoryState.Renamed));
+            log?.Invoke(new Model.DirectoryInfo("\nOld Path: " + oldPath + "\nNew Path: " + newPath, Model.DirectoryState.Renamed));
         }
 
         public void OnError(object sender, ErrorEventArgs e)
         {
-            log(new Model.DirectoryInfo(e.GetException().Message, Model.DirectoryState.Error));
+            log?.Invoke(new Model.DirectoryInfo(e.GetException().Message, Model.DirectoryState.Error));
         }
         #endregion
     }

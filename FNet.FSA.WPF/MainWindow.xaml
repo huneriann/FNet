@@ -1,0 +1,47 @@
+﻿<Window x:Class="FNet.FSA.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FNet.FSA.WPF"
+        mc:Ignorable="d"
+        Title="FNet.FSA" Height="450" Width="800">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            
+        </Menu>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" 
+                    x:Name="runBtn" Click="runBtn_Click"
+                    Content="Run" Margin="3"/>
+
+            <TextBox Grid.Column="1" 
+                     x:Name="pathTxtBox"
+                     Margin="3"/>
+        </Grid>
+
+        <DataGrid Grid.Row="2"
+                  x:Name="mainDataGrid" ItemsSource="{Binding DirInfos}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Type" Width="auto" Binding="{Binding State}"/>
+                <DataGridTextColumn Header="Time" Width="auto" Binding="{Binding DateTime}"/>
+                <DataGridTextColumn Header="Path" Width="*" Binding="{Binding Path}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+    </Grid>
+    
+</Window>

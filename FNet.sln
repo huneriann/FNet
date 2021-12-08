@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FNet.FSA.Console", "FNet.FSA.Console\FNet.FSA.Console.csproj", "{F4C9BF64-5320-4006-9AD2-6147F132F22B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNet.FSA.Core", "FNet.FSA.Core\FNet.FSA.Core.csproj", "{BF528E19-2915-4623-8670-47679B61253E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FNet.FSA.Core", "FNet.FSA.Core\FNet.FSA.Core.csproj", "{BF528E19-2915-4623-8670-47679B61253E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNet.FSA.WPF", "FNet.FSA.WPF\FNet.FSA.WPF.csproj", "{FF532AEB-4E53-40CC-B5FB-37280B61F027}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{BF528E19-2915-4623-8670-47679B61253E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF528E19-2915-4623-8670-47679B61253E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF528E19-2915-4623-8670-47679B61253E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF532AEB-4E53-40CC-B5FB-37280B61F027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF532AEB-4E53-40CC-B5FB-37280B61F027}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF532AEB-4E53-40CC-B5FB-37280B61F027}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF532AEB-4E53-40CC-B5FB-37280B61F027}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
