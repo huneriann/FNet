@@ -62,37 +62,30 @@ namespace FNet.FSA.Core
         #region handles
         public void OnChanged(object sender, FileSystemEventArgs e)
         {
-            if (e.ChangeType != WatcherChangeTypes.Changed)
-            {
+            if (e.ChangeType != WatcherChangeTypes.Changed) 
                 return;
-            }
 
-            string path = e.FullPath;
-            log?.Invoke(new Model.DirectoryInfo(path, Model.DirectoryState.Changed));
+            log?.Invoke(new Model.DirectoryInfo(e.FullPath, Model.DirectoryState.Changed, ""));
         }
 
         public void OnCreated(object sender, FileSystemEventArgs e)
         {
-            string path = e.FullPath;
-            log?.Invoke(new Model.DirectoryInfo(path, Model.DirectoryState.Created));
+            log?.Invoke(new Model.DirectoryInfo(e.FullPath, Model.DirectoryState.Created, ""));
         }
 
         public void OnDeleted(object sender, FileSystemEventArgs e)
         {
-            string path = e.FullPath;
-            log?.Invoke(new Model.DirectoryInfo(path, Model.DirectoryState.Deleted));
+            log?.Invoke(new Model.DirectoryInfo(e.FullPath, Model.DirectoryState.Deleted, ""));
         }
 
         public void OnRenamed(object sender, RenamedEventArgs e)
         {
-            string oldPath = e.OldFullPath;
-            string newPath = e.FullPath;
-            log?.Invoke(new Model.DirectoryInfo("\nOld Path: " + oldPath + "\nNew Path: " + newPath, Model.DirectoryState.Renamed));
+            log?.Invoke(new Model.DirectoryInfo(e.OldFullPath, Model.DirectoryState.Renamed, "\nOld Path: " + e.OldFullPath + "\nNew Path: " + e.FullPath));
         }
 
         public void OnError(object sender, ErrorEventArgs e)
         {
-            log?.Invoke(new Model.DirectoryInfo(e.GetException().Message, Model.DirectoryState.Error));
+            log?.Invoke(new Model.DirectoryInfo(e.GetException().Message, Model.DirectoryState.Error, ""));
         }
         #endregion
     }

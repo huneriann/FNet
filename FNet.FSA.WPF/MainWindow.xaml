@@ -4,14 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FNet.FSA.WPF"
+        xmlns:converters="clr-namespace:FNet.FSA.WPF.Converters"
         mc:Ignorable="d"
-        Title="FNet.FSA" Height="450" Width="800">
+        Title="FNet.FSA" Height="450" Width="400">
+
+    <Window.Resources>
+        <converters:InverseConverter x:Key="inverseConverter"/>
+    </Window.Resources>
     
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*" MinHeight="30"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*" MinHeight="30"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
@@ -23,40 +30,48 @@
         </Menu>
 
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-            <Button Grid.Column="0" 
-                    x:Name="runBtn" Click="runBtn_Click"
-                    Margin="3">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="3 0">
-                        <TextBlock Text="▶" Foreground="Green"/>
-                        <TextBlock Text=" Start" Foreground="Black"/>
-                    </StackPanel>
-                </Button.Content>
-            </Button>
+            <ToolBarTray Grid.Row="0">
+                <ToolBar>
+                    <Button x:Name="runBtn" Click="runBtn_Click" IsEnabled="{Binding IsRunning, Converter={StaticResource inverseConverter}}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Margin="3 0">
+                                <TextBlock Text="▶" Foreground="Green"/>
+                                <TextBlock Text=" Start" Foreground="Black"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
 
-            <Button Grid.Column="1" 
-                    x:Name="stopBtn" Click="stopBtn_Click"
-                    Margin="3" IsEnabled="{Binding IsRunning}">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="3 0">
-                        <TextBlock Text="⏹" Foreground="Red"/>
-                        <TextBlock Text=" Stop" Foreground="Black"/>
-                    </StackPanel>
-                </Button.Content>
-            </Button>
+                    <Button x:Name="stopBtn" Click="stopBtn_Click" IsEnabled="{Binding IsRunning}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Margin="3 0">
+                                <TextBlock Text="⏹" Foreground="Red"/>
+                                <TextBlock Text=" Stop" Foreground="Black"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </ToolBar>
 
-            <TextBox Grid.Column="2" 
+                <ToolBar>
+                    <Button Content="Clear Grid" x:Name="clearGridBtn" Click="clearGridBtn_Click"/>
+                </ToolBar>
+                
+            </ToolBarTray>
+
+            <Grid Grid.Row="1">
+                <TextBox Grid.Row="1" 
                      x:Name="pathTxtBox"
-                     Margin="3" Text="C:\"/>
-            
+                     Margin="3" Text="C:\users\HeshimzadeI\Desktop" Panel.ZIndex="1"
+                     Background="Transparent" IsEnabled="{Binding IsRunning, Converter={StaticResource inverseConverter}}"/>
+                <ProgressBar IsIndeterminate="True" VerticalAlignment="Center"
+                             Margin="3"
+                             Panel.ZIndex="0" Height="{Binding ElementName=pathTxtBox, Path=ActualHeight}"
+                             Visibility="{Binding _Visibility}" Foreground="LightGreen"/>
+            </Grid>
         </Grid>
 
         <DataGrid Grid.Row="2"
@@ -65,29 +80,31 @@
                   CanUserAddRows="False" CanUserDeleteRows="False" 
                   CanUserReorderColumns="False" CanUserResizeRows="False" 
                   CanUserSortColumns="False"
-                  AlternatingRowBackground="LightGray">
+                  AlternatingRowBackground="LightGray"
+                  SelectionChanged="mainDataGrid_SelectionChanged"
+                  SelectedItem="{Binding SelectedInfo}" 
+                  SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Type" Width="auto" Binding="{Binding State}"/>
-                <DataGridTextColumn Header="Time" Width="auto" Binding="{Binding DateTime, StringFormat=dd.MM.yyyy HH:mm:ss}"/>
-                <DataGridTemplateColumn Header="Path" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Type" Width="auto" Binding="{Binding State}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Time" Width="auto" Binding="{Binding DateTime, StringFormat=dd.MM.yyyy HH:mm:ss}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Path" Width="*" Binding="{Binding Path}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Info" Width="*" Binding="{Binding Info}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <WrapPanel Grid.Row="3" Orientation="Horizontal">
-            <StackPanel Orientation="Horizontal"
-                        Visibility="{Binding _Visibility}">
-                <ProgressBar Width="200" Height="10"
-                             Margin="3" IsIndeterminate="True"/>
-                <TextBlock Text="Running..."/>
+        <GridSplitter Grid.Row="3" Height="5" ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+
+        <Frame x:Name="detailsFrame" Grid.Row="4" NavigationUIVisibility="Hidden"/>
+
+        <DockPanel Grid.Row="5" LastChildFill="False">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                        Visibility="{Binding _Visibility}" DockPanel.Dock="Left">
+                <TextBlock Text="Running..." VerticalAlignment="Center"/>
             </StackPanel>
-        </WrapPanel>
-        
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                <TextBlock Margin="3" Text="{Binding DirInfos.Count, StringFormat={}{0} row(s)}"/>
+            </StackPanel>
+        </DockPanel>
     </Grid>
     
 </Window>

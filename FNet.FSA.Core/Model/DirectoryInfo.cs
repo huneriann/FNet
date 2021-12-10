@@ -28,11 +28,21 @@ namespace FNet.FSA.Core.Model
         }
 
 
-        public DirectoryInfo(string path, DirectoryState state)
+        private string _info;
+        public string Info
+        {
+            get { return _info; }
+            set { _info = value; }
+        }
+
+        public DirectoryInfo(string path, DirectoryState state, string info)
         {
             this._path = path;
             this._state = state;
+            this._info = info;
             this._dateTime = DateTime.Now;
         }
+
+        public DirectoryInfo() { }
     }
 }
