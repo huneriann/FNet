@@ -16,11 +16,12 @@
                 <Button Content="Expand all" Margin="5 0" Padding="5 0" Click="expandBtn_Click"/>
                 <Button Content="Collapse all" Margin="5 0" Padding="5 0" Click="collapseBtn_Click"/>
             </StackPanel>
-            <TreeView x:Name="mainTreeView" 
+            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                <TreeView x:Name="mainTreeView" 
                       Background="Transparent" 
                       BorderThickness="0" 
-                      Margin="3"
-                      ItemsSource="{Binding PathInfo}"/>
+                      Margin="3"/>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </Page>
