@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace FNet.FSA.Core
 {
-    public delegate void Log(Model.DirectoryInfo info);
-    public delegate Task LogAsync(Model.DirectoryInfo info);
+    public delegate void Log(Model.PathInfo info);
+    public delegate Task LogAsync(Model.PathInfo info);
 
     public class Analyzer
     {
@@ -51,7 +51,7 @@ namespace FNet.FSA.Core
         private Analyzer() { }
         public static Analyzer GetObject()
         {
-            if(obj == null)
+            if (obj == null)
             {
                 obj = new Analyzer();
             }
@@ -62,30 +62,30 @@ namespace FNet.FSA.Core
         #region handles
         public void OnChanged(object sender, FileSystemEventArgs e)
         {
-            if (e.ChangeType != WatcherChangeTypes.Changed) 
+            if (e.ChangeType != WatcherChangeTypes.Changed)
                 return;
 
-            log?.Invoke(new Model.DirectoryInfo(e.FullPath, Model.DirectoryState.Changed, ""));
+            log?.Invoke(new Model.PathInfo(e.FullPath, Model.PathState.Changed, ""));
         }
 
         public void OnCreated(object sender, FileSystemEventArgs e)
         {
-            log?.Invoke(new Model.DirectoryInfo(e.FullPath, Model.DirectoryState.Created, ""));
+            log?.Invoke(new Model.PathInfo(e.FullPath, Model.PathState.Created, ""));
         }
 
         public void OnDeleted(object sender, FileSystemEventArgs e)
         {
-            log?.Invoke(new Model.DirectoryInfo(e.FullPath, Model.DirectoryState.Deleted, ""));
+            log?.Invoke(new Model.PathInfo(e.FullPath, Model.PathState.Deleted, ""));
         }
 
         public void OnRenamed(object sender, RenamedEventArgs e)
         {
-            log?.Invoke(new Model.DirectoryInfo(e.OldFullPath, Model.DirectoryState.Renamed, "\nOld Path: " + e.OldFullPath + "\nNew Path: " + e.FullPath));
+            log?.Invoke(new Model.PathInfo(e.OldFullPath, Model.PathState.Renamed, "\nOld Path: " + e.OldFullPath + "\nNew Path: " + e.FullPath));
         }
 
         public void OnError(object sender, ErrorEventArgs e)
         {
-            log?.Invoke(new Model.DirectoryInfo(e.GetException().Message, Model.DirectoryState.Error, ""));
+            log?.Invoke(new Model.PathInfo(e.GetException().Message, Model.PathState.Error, ""));
         }
         #endregion
     }

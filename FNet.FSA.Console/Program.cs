@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using FNet.FSA.Console.CLI;
+﻿using FNet.FSA.Console.CLI;
 using FNet.FSA.Core;
+using System;
+using System.Linq;
 
 namespace FNet.FSA.Console
 {
@@ -14,16 +14,16 @@ namespace FNet.FSA.Console
             //-p|--path <path>
 
             Analyzer.GetObject().log = Log;
-            
+
             if (args.Contains("-h") || args.Contains("--help"))
             {
                 Call("-h", null);
                 return;
             }
-            
-            if (args.Contains("-p") || args.Contains("--path")) 
+
+            if (args.Contains("-p") || args.Contains("--path"))
                 Call("-p", args[1]);
-            
+
             Analyzer.GetObject().Execute();
             System.Console.ReadLine();
         }
@@ -47,25 +47,25 @@ namespace FNet.FSA.Console
                             x => x.Invoke(null, parameters));
         }
 
-        public static void Log(FNet.FSA.Core.Model.DirectoryInfo di)
+        public static void Log(FNet.FSA.Core.Model.PathInfo di)
         {
-            if(di.State == FNet.FSA.Core.Model.DirectoryState.Changed)
+            if (di.State == FNet.FSA.Core.Model.PathState.Changed)
             {
                 System.Console.WriteLine($"[Changed] [{di.DateTime.ToString("HH:mm:ss")}] {di.Path}");
             }
-            else if(di.State == FNet.FSA.Core.Model.DirectoryState.Created)
+            else if (di.State == FNet.FSA.Core.Model.PathState.Created)
             {
                 System.Console.WriteLine($"[Created] [{di.DateTime.ToString("HH:mm:ss")}] {di.Path}");
             }
-            else if (di.State == FNet.FSA.Core.Model.DirectoryState.Deleted)
+            else if (di.State == FNet.FSA.Core.Model.PathState.Deleted)
             {
                 System.Console.WriteLine($"[Deleted] [{di.DateTime.ToString("HH:mm:ss")}] {di.Path}");
             }
-            else if (di.State == FNet.FSA.Core.Model.DirectoryState.Renamed)
+            else if (di.State == FNet.FSA.Core.Model.PathState.Renamed)
             {
                 System.Console.WriteLine($"[Renamed] [{di.DateTime.ToString("HH:mm:ss")}] {di.Path}");
             }
-            else if (di.State == FNet.FSA.Core.Model.DirectoryState.Error)
+            else if (di.State == FNet.FSA.Core.Model.PathState.Error)
             {
                 System.Console.WriteLine($"[Renamed] [{di.DateTime.ToString("HH:mm:ss")}] {di.Path}");
             }

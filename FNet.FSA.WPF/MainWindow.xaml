@@ -96,14 +96,9 @@
 
         <Frame x:Name="detailsFrame" Grid.Row="4" NavigationUIVisibility="Hidden"/>
 
-        <DockPanel Grid.Row="5" LastChildFill="False">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
-                        Visibility="{Binding _Visibility}" DockPanel.Dock="Left">
-                <TextBlock Text="Running..." VerticalAlignment="Center"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
-                <TextBlock Margin="3" Text="{Binding DirInfos.Count, StringFormat={}{0} row(s)}"/>
-            </StackPanel>
+        <DockPanel Grid.Row="5" LastChildFill="False" Background="LightGray">
+            <TextBlock Text="Running..." VerticalAlignment="Center" Margin="3" Visibility="{Binding _Visibility}" DockPanel.Dock="Left"/>
+            <TextBlock Margin="3" Text="{Binding DirInfos.Count, StringFormat={}{0} row(s)}" DockPanel.Dock="Right" VerticalAlignment="Center"/>
         </DockPanel>
     </Grid>
     

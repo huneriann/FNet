@@ -1,6 +1,7 @@
 ﻿using FNet.FSA.Core;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
@@ -14,15 +15,15 @@ namespace FNet.FSA.WPF
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         #region Properties
-        private ObservableCollection<Core.Model.DirectoryInfo> dirInfos;
-        public ObservableCollection<Core.Model.DirectoryInfo> DirInfos
+        private ObservableCollection<Core.Model.PathInfo> dirInfos;
+        public ObservableCollection<Core.Model.PathInfo> DirInfos
         {
-            get { return dirInfos; } 
+            get { return dirInfos; }
             set { dirInfos = value; OnChanged(); }
         }
 
-        private Core.Model.DirectoryInfo selectedInfo;
-        public Core.Model.DirectoryInfo SelectedInfo
+        private Core.Model.PathInfo selectedInfo;
+        public Core.Model.PathInfo SelectedInfo
         {
             get { return selectedInfo; }
             set { selectedInfo = value; OnChanged(); }
@@ -55,8 +56,8 @@ namespace FNet.FSA.WPF
             detailsPage = new DetailsPage();
             detailsFrame.Content = detailsPage;
 
-            DirInfos = new ObservableCollection<Core.Model.DirectoryInfo>();
-            SelectedInfo = new Core.Model.DirectoryInfo();
+            DirInfos = new ObservableCollection<Core.Model.PathInfo>();
+            SelectedInfo = new Core.Model.PathInfo();
 
             IsRunning = false;
             _Visibility = Visibility.Collapsed;
@@ -78,7 +79,7 @@ namespace FNet.FSA.WPF
             _Visibility = Visibility.Collapsed;
         }
 
-        private void Log(Core.Model.DirectoryInfo info)
+        private void Log(Core.Model.PathInfo info)
         {
             Thread t = new Thread(new ParameterizedThreadStart(AddToList));
             t.Start(info);
@@ -88,14 +89,14 @@ namespace FNet.FSA.WPF
         {
             App.Current.Dispatcher.Invoke(() =>
             {
-                Core.Model.DirectoryInfo dirInfo = (Core.Model.DirectoryInfo)info;
-                DirInfos.Add(new Core.Model.DirectoryInfo(dirInfo.Path, dirInfo.State, dirInfo.Info.Trim()));
+                Core.Model.PathInfo dirInfo = (Core.Model.PathInfo)info;
+                DirInfos.Add(new Core.Model.PathInfo(dirInfo.Path, dirInfo.State, dirInfo.Info.Trim()));
             });
         }
 
         private void mainDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(SelectedInfo != null)
+            if (SelectedInfo != null)
             {
                 detailsPage.UpdateInterface(SelectedInfo);
             }
@@ -103,16 +104,16 @@ namespace FNet.FSA.WPF
 
         private void clearGridBtn_Click(object sender, RoutedEventArgs e)
         {
-            DirInfos = new ObservableCollection<Core.Model.DirectoryInfo>();
-            SelectedInfo = new Core.Model.DirectoryInfo();
+            DirInfos = new ObservableCollection<Core.Model.PathInfo>();
+            SelectedInfo = new Core.Model.PathInfo();
         }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
-        //PropertyChanged event realisation
+        #region MVVM
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnChanged([CallerMemberName]string propname = "")
+        public void OnChanged([CallerMemberName] string propname = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
         }
+        #endregion
     }
 }

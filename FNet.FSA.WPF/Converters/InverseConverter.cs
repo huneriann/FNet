@@ -9,7 +9,8 @@ namespace FNet.FSA.WPF.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value.GetType() == Visibility.Hidden.GetType()){
+            if (value.GetType() == Visibility.Hidden.GetType())
+            {
                 if ((Visibility)value == Visibility.Visible) return Visibility.Collapsed;
                 if ((Visibility)value == Visibility.Collapsed) return Visibility.Visible;
             }

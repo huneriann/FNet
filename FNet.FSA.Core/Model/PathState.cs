@@ -1,6 +1,6 @@
 ﻿namespace FNet.FSA.Core.Model
 {
-    public enum DirectoryState
+    public enum PathState
     {
         Changed,
         Created,
