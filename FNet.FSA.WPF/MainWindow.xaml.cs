@@ -1,7 +1,6 @@
 ﻿using FNet.FSA.Core;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
@@ -87,7 +86,7 @@ namespace FNet.FSA.WPF
 
         private void AddToList(object info)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            this.Dispatcher.Invoke(() =>
             {
                 Core.Model.PathInfo dirInfo = (Core.Model.PathInfo)info;
                 DirInfos.Add(new Core.Model.PathInfo(dirInfo.Path, dirInfo.State, dirInfo.Info.Trim()));
@@ -102,11 +101,6 @@ namespace FNet.FSA.WPF
             }
         }
 
-        private void clearGridBtn_Click(object sender, RoutedEventArgs e)
-        {
-            DirInfos = new ObservableCollection<Core.Model.PathInfo>();
-            SelectedInfo = new Core.Model.PathInfo();
-        }
 
         #region MVVM
         public event PropertyChangedEventHandler PropertyChanged;

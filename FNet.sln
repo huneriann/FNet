@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FNet.FSA.Console", "FNet.FS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FNet.FSA.Core", "FNet.FSA.Core\FNet.FSA.Core.csproj", "{BF528E19-2915-4623-8670-47679B61253E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNet.FSA.WPF", "FNet.FSA.WPF\FNet.FSA.WPF.csproj", "{FF532AEB-4E53-40CC-B5FB-37280B61F027}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FNet.FSA.WPF", "FNet.FSA.WPF\FNet.FSA.WPF.csproj", "{FF532AEB-4E53-40CC-B5FB-37280B61F027}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

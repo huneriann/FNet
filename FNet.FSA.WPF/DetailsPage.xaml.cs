@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -28,21 +29,28 @@ namespace FNet.FSA.WPF
 
         public void UpdateInterface(Core.Model.PathInfo info)
         {
+            //prGrid.SelectedObject = info;
             mainTreeView.Items.Clear();
 
             TreeViewItem pathTreeViewItem = new TreeViewItem();
             pathTreeViewItem.Header = "Path Info";
 
             var pathStateTxtBlock = new TextBlock();
-            pathStateTxtBlock.Text = "Path: " + info.State;
+            pathStateTxtBlock.Text = "State: " + info.State;
             var dateTimeTxtBlock = new TextBlock();
             dateTimeTxtBlock.Text = "Date Time: " + info.DateTime.ToString("dd.MM.yyyy HH:mm:ss");
             var infoTxtBlock = new TextBlock();
             infoTxtBlock.Text = "Info: " + info.Info;
+            var isFileTxtBlock = new TextBlock();
+            isFileTxtBlock.Text = "Is File: " + info.FileInfo.Exists;
+            var isDirectoryTxtBlock = new TextBlock();
+            isDirectoryTxtBlock.Text = "Is Directory: " + info.DirectoryInfo.Exists;
 
             pathTreeViewItem.Items.Add(infoTxtBlock);
             pathTreeViewItem.Items.Add(pathStateTxtBlock);
             pathTreeViewItem.Items.Add(dateTimeTxtBlock);
+            pathTreeViewItem.Items.Add(isFileTxtBlock);
+            pathTreeViewItem.Items.Add(isDirectoryTxtBlock);
 
             var subTreeViewItem = new TreeViewItem();
             if (new System.IO.DirectoryInfo(info.Path).Exists)
@@ -50,15 +58,22 @@ namespace FNet.FSA.WPF
                 subTreeViewItem.Header = "Directory Info";
 
                 subTreeViewItem.Items.Add("Full Path: " + info.DirectoryInfo.FullName);
-                subTreeViewItem.Items.Add("File Path: " + info.DirectoryInfo.Name);
+                subTreeViewItem.Items.Add("Directory Path: " + info.DirectoryInfo.Name);
                 subTreeViewItem.Items.Add("Attributes: " + info.DirectoryInfo.Attributes);
                 subTreeViewItem.Items.Add("Creation DateTime: " + info.DirectoryInfo.CreationTime.ToString("dd.MM.yyyy HH:mm:ss"));
                 subTreeViewItem.Items.Add("Extension: " + info.DirectoryInfo.Extension);
                 subTreeViewItem.Items.Add("Last Modified DateTime: " + info.DirectoryInfo.LastAccessTime.ToString("dd.MM.yyyy HH:mm:ss"));
                 subTreeViewItem.Items.Add("Parent: " + info.DirectoryInfo.Parent);
                 subTreeViewItem.Items.Add("Root: " + info.DirectoryInfo.Root);
-                subTreeViewItem.Items.Add("Subdirectories Count: " + info.DirectoryInfo.GetDirectories().Length);
-                subTreeViewItem.Items.Add("Files Count: " + info.DirectoryInfo.GetFiles().Length);
+                try
+                {
+                    subTreeViewItem.Items.Add("Subdirectories Count: " + info.DirectoryInfo.GetDirectories().Length);
+                    subTreeViewItem.Items.Add("Files Count: " + info.DirectoryInfo.GetFiles().Length);
+                }
+                catch (Exception ex)
+                {
+                    subTreeViewItem.Items.Add("Exception: " + ex.Message);
+                }
             }
             if (new System.IO.FileInfo(info.Path).Exists)
             {
@@ -103,7 +118,7 @@ namespace FNet.FSA.WPF
 
         #region MVVM
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnChanged([CallerMemberName]string propname = "")
+        private void OnChanged([CallerMemberName] string propname = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
         }
